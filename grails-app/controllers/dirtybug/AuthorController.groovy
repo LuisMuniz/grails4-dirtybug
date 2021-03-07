@@ -2,6 +2,7 @@ package dirtybug
 
 class AuthorController {
 	static responseFormats = ['json', 'xml']
+    AuthorService authorService
 	
     def index() {
         respond Author.list()
@@ -16,8 +17,6 @@ class AuthorController {
     }
 
     def update(Long id) {
-        def existing=Author.get(id)
-        existing.updateFromBuggy(new UpdateAuthorCommand(request.JSON))
-        respond existing.save()
+        respond authorService.update(id,new UpdateAuthorCommand(request.JSON))
     }
 }
